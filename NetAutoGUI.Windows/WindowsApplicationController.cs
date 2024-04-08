@@ -56,8 +56,18 @@ namespace NetAutoGUI.Windows
 		{
 			return FindWindow(t => title == t.Title);
 		}
+		public Window? ActivateWindowByTitle(string title)
+		{
+			var window = WaitForWindowLikeTitle(title);
+			if (window != null)
+			{
+				var active = User32.SetForegroundWindow(new IntPtr(window.Id));
+				var test = User32.ShowWindowAsync(new IntPtr((int)window.Id), ShowWindowCommand.SW_SHOWMAXIMIZED);
+			}
+			return window;
 
-		public Window? FindWindow(Func<Window, bool> predict)
+        }
+            public Window? FindWindow(Func<Window, bool> predict)
 		{
 			Window? window = null;
 			User32.EnumWindows((hwnd, _) =>
