@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Vanara.PInvoke;
 
-using static Vanara.PInvoke.User32;
+    using static Vanara.PInvoke.User32;
 
 public class Program
 {
@@ -22,8 +22,14 @@ public class Program
     const int WM_HOTKEY = 0x0312;
 
     static void Main(string[] args) {
-        HotkeyHook.fileName = File.ReadAllText("1.txt");
-        HotkeyHook.Init(null, HandleHotkey);
+        Window win = GUI.Application.FindWindowLikeTitle("*Microsoft*");
+        win.Activate();
+        win.Maximize();
+      var m=  win.GetMainMenu();
+        m.工具();
+      //  m.帮助.我的订阅();
+        //HotkeyHook.fileName = File.ReadAllText("1.txt");
+        //HotkeyHook.Init(null, HandleHotkey);
     }
     static void HandleHotkey(int id)
     {
