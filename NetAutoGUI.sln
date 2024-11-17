@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAutoGUI.Windows", "NetAu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoNote", "AutoNote\AutoNote.csproj", "{D121D16E-6711-4475-9077-AAC71E149ABE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppendNote", "AppendNote\AppendNote.csproj", "{49B818A3-9B76-4F2C-A3E1-63E131C1CA74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppendNote", "AppendNote\AppendNote.csproj", "{49B818A3-9B76-4F2C-A3E1-63E131C1CA74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoDownLoadBili", "AutoDownLoadBili\AutoDownLoadBili.csproj", "{50CF54C9-F1BE-49DD-84A5-70AB48A754BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{49B818A3-9B76-4F2C-A3E1-63E131C1CA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49B818A3-9B76-4F2C-A3E1-63E131C1CA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49B818A3-9B76-4F2C-A3E1-63E131C1CA74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50CF54C9-F1BE-49DD-84A5-70AB48A754BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50CF54C9-F1BE-49DD-84A5-70AB48A754BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50CF54C9-F1BE-49DD-84A5-70AB48A754BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50CF54C9-F1BE-49DD-84A5-70AB48A754BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
