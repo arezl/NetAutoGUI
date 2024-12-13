@@ -1,10 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using Microsoft.VisualBasic.ApplicationServices;
 using NetAutoGUI;
 using NetAutoGUI.Windows;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using Vanara.PInvoke;
 
 using static Vanara.PInvoke.User32;
@@ -20,11 +22,41 @@ public class Program
     static extern bool IsWindowVisible(IntPtr hWnd);
     private static bool isFile = false;
     const int WM_HOTKEY = 0x0312;
-
+    static string filePath = "1.txt";
     static void Main(string[] args) {
-        HotkeyHook.fileName = File.ReadAllText("1.txt");
+        
+        HotkeyHook.fileName = File.ReadAllText(filePath);
+        var ct = new CancellationTokenSource().Token;
+        //*入库动态选择商品 *Code*
+        Task.Run(() => {
+            using (FileSystemWatcher watcher = new FileSystemWatcher())
+            {
+                watcher.Path = System.AppDomain.CurrentDomain.BaseDirectory;
+                watcher.Filter = Path.GetFileName(filePath);
+
+                // 监听更改事件
+                watcher.Changed += OnChanged;
+
+                // 启用事件触发
+                watcher.EnableRaisingEvents = true;
+
+                // 输出当前文件内容
+                Console.WriteLine("Initial file content:");
+              
+
+                Console.WriteLine("Press 'q' to quit.");
+                ct.WaitHandle.WaitOne();
+            }
+        });
+      
         HotkeyHook.Init(null, HandleHotkey);
     }
+
+    private static void OnChanged(object sender, FileSystemEventArgs e)
+    {
+        HotkeyHook.fileName = File.ReadAllText(filePath).Trim();   //*入库动态选择商品 *Code*
+    }
+
     static void HandleHotkey(int id)
     {
         switch (id)
@@ -81,26 +113,18 @@ public class Program
                 }
                 else
                 {
-                    HotkeyHook.SetClipboardData(content);
-                    var aimWindow = GUI.Application.ActivateWindowByTitle(HotkeyHook.fileName);
-
-                    Task.Delay(500).Wait();
-                    //new IntPtr(value)
-                    GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.END);
-
-                    GUI.Keyboard.Press(VirtualKeyCode.RETURN);
-                    Task.Delay(200).Wait();
-                    GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
-                    Task.Delay(200).Wait();
-                    GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_S);
-                    using (GUI.Keyboard.Hold(VirtualKeyCode.MENU))
+                    try
                     {
-                        GUI.Keyboard.Press(VirtualKeyCode.TAB);
-                        GUI.Keyboard.Press(VirtualKeyCode.TAB);
+                        PastContent(content);
                     }
+                    catch (Exception ex)
+                    {
+ 
+                    }
+                   
                     break;
                 }
-                    
+
 
 
             default:
@@ -110,6 +134,27 @@ public class Program
         }
       
         //Console.WriteLine("Hello, World!");
+    }
+
+    private static void PastContent(string? content)
+    {
+        HotkeyHook.SetClipboardData(content);
+        var aimWindow = GUI.Application.ActivateWindowByTitle(HotkeyHook.fileName);
+
+        Task.Delay(500).Wait();
+        //new IntPtr(value)
+        GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.END);
+
+        GUI.Keyboard.Press(VirtualKeyCode.RETURN);
+        Task.Delay(200).Wait();
+        GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+        Task.Delay(200).Wait();
+        GUI.Keyboard.HotKey(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_S);
+        using (GUI.Keyboard.Hold(VirtualKeyCode.MENU))
+        {
+            GUI.Keyboard.Press(VirtualKeyCode.TAB);
+            GUI.Keyboard.Press(VirtualKeyCode.TAB);
+        }
     }
 
     //var winChrome = NetAutoGUI.GUI.Application.WaitForWindowLikeTitle("*Token*", timeoutSeconds: 5);

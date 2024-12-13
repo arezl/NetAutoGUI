@@ -8,6 +8,7 @@ using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Threading;
 namespace NetAutoGUI.Windows
 {
     public static class HotkeyHook
@@ -25,8 +26,10 @@ namespace NetAutoGUI.Windows
         {
             // 注册全局快捷键
             RegisterHotkey(Keys.F4, KeyModifiers.None, 1);
-            //RegisterHotkey(Keys.F2, KeyModifiers.Control, 2);
-
+            RegisterHotkey(Keys.D1, KeyModifiers.Alt, 2);
+            RegisterHotkey(Keys.D2, KeyModifiers.Alt, 3);
+            RegisterHotkey(Keys.D3, KeyModifiers.Alt, 4);
+            RegisterHotkey(Keys.D4, KeyModifiers.Alt, 5);
             Console.WriteLine("Press 'Q' to quit.");
 
             // 消息循环
@@ -51,7 +54,7 @@ namespace NetAutoGUI.Windows
                 }
 
                 // 在这里可以执行其他任务，或者睡眠一段时间以减少 CPU 使用率
-                // Thread.Sleep(100);
+                  Thread.Sleep(500);
             }
 
             // 注销全局快捷键
